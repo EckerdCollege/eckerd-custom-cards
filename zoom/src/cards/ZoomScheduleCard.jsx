@@ -94,24 +94,29 @@ const ZoomScheduleCard = (props) => {
 						</Tooltip>
 						<Typography variant="body3" gutterBottom={true}>URL: {user.personal_meeting_url}</Typography>
 					</Typography>
-					<Typography gutterBottom={false} variant="h4">Upcoming Meetings:</Typography>
-					<List>
-						{schedule.map((meeting) => (
-						<ListItem key={meeting.id}>
-							<ListItemIcon>
-								<Icon
-									name="calendar"
-									large
+					<Typography gutterBottom={true} variant="h4">Upcoming Meetings:</Typography>
+					{schedule.length == 0 && (
+						<Typography align="center" gutterBottom={true}>No upcoming meetings scheduled.</Typography>
+					)}
+					{schedule.length > 0 && (
+						<List>
+							{schedule.map((meeting) => (
+							<ListItem key={meeting.id}>
+								<ListItemIcon>
+									<Icon
+										name="calendar"
+										large
+									/>
+								</ListItemIcon>
+								<ListItemText
+									primary={meeting.topic}
+									secondary={moment(meeting.start_time).format('MM/DD h:mm a') + ' (' + meeting.duration + ' min.)'}
 								/>
-							</ListItemIcon>
-							<ListItemText
-								primary={meeting.topic}
-								secondary={moment(meeting.start_time).format('MM/DD h:mm a') + ' (' + meeting.duration + ' min.)'}
-							/>
-							<Button href={meeting.join_url} target="_blank" rel="noreferrer">Join</Button>
-						</ListItem>
-						))}
-					</List>
+								<Button href={meeting.join_url} target="_blank" rel="noreferrer">Join</Button>
+							</ListItem>
+							))}
+						</List>
+					)}
 				</>
 			)}
 			{!user && (
